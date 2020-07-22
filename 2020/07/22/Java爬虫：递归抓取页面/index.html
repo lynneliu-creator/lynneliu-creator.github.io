@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0"><meta name="description" content="Java爬虫：递归抓取页面 [ lynne's blog:) ] "><meta name="theme-color" content="#9be3de"><title>Java爬虫：递归抓取页面 [ lynne's blog:) ] </title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css"><script src="https://cdn.bootcss.com/highlight.js/9.6.0/highlight.min.js" defer></script><script src="/js/paper.js" defer></script><script src="https://www.googletagmanager.com/gtag/js?id=xx-xxxxxxx-xx" async></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'xx-xxxxxxx-xx');</script><link rel="stylesheet" href="/css/tocbot.css"><script src="/js/tocbot.js" defer></script><script>window.addEventListener('DOMContentLoaded', () => {
+  tocbot.init({
+    // Where to render the table of contents.
+    tocSelector: '.toc__content',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: '.article__content',
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    // For headings inside relative or absolute positioned containers within content.
+    hasInnerContainers: true,
+    orderedList: false,
+    collapseDepth: 2,
+  });
+})</script><link rel="preload" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css"><link rel="preload" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="mask-border"></div><div class="head"><div class="head__inner"><h1><a href="/">lynne's blog:)</a></h1><p>I am a force to be reckoned with.</p></div></div><div class="paper-container"><div class="main"><div class="location-bar"><div class="line-1"><div class="horizontal-line" style="height: 3px"></div></div><div class="line-2"><div class="horizontal-line" style="height: 1px"></div></div><p class="text">Java爬虫：递归抓取页面</p><div class="switch-button"><input class="container_toggle" type="checkbox" id="switch" name="mode"><label for="switch">Toggle</label></div><div class="line-3"><div class="horizontal-line" style="height: 1px"></div></div></div><div class="main__2-col"><article class="post-view__article"><div class="article__infomation"><div class="posts-item"><h2 class="posts-item__title"><a href="">Java爬虫：递归抓取页面</a></h2><span class="post__date">2020-07-22</span><a href="/tags/Java/"><span class="post__tags">#Java</span></a></div></div><div class="article__content"><h2 id="课程设计内容"><a href="#课程设计内容" class="headerlink" title="课程设计内容"></a>课程设计内容</h2><p>选题 网站信息抓取：选取一个特定的网站（以豆瓣电影为例），使用Java爬取10000个页面的数据后，对数据进行统计分析。</p>
+<h2 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h2><p>1、爬虫工作原理及关键技术概述<br>  网络爬虫是一个自动提取网页的程序，它为搜索引擎从万维网上下载网页，是搜索引擎的重要组成。传统爬虫从一个或若干初始网页的URL开始，获得初始网页上的URL，在抓取网页的过程中，不断从当前页面上抽取新的URL放入队列，直到满足系统的一定停止条件。聚焦爬虫的工作流程较为复杂，需要根据一定的网页分析算法过滤与主题无关的链接，保留有用的链接并将其放入等待抓取的URL队列。然后，它将根据一定的搜索策略从队列中选择下一步要抓取的网页URL，并重复上述过程，直到达到系统的某一条件时停止。另外，所有被爬虫抓取的网页将会被系统存贮，进行一定的分析、过滤，并建立索引，以便之后的查询和检索；对于聚焦爬虫来说，这一过程所得到的分析结果还可能对以后的抓取过程给出反馈和指导。</p>
+<p>2、正则表达式含义及构造方法概述<br>  正则表达式(regular expression)描述了一种字符串匹配的模式（pattern），可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。<br>  正则表达式是由普通字符（例如字符 a 到 z）以及特殊字符（称为”元字符”）组成的文字模式。模式描述在搜索文本时要匹配的一个或多个字符串。正则表达式作为一个模板，将某个字符模式与所搜索的字符串进行匹配。<br>  构造正则表达式的方法和创建数学表达式的方法一样。也就是用多种元字符与运算符可以将小的表达式结合在一起来创建更大的表达式。正则表达式的组件可以是单个的字符、字符集合、字符范围、字符间的选择或者所有这些组件的任意组合。</p>
+<h2 id="设计步骤和内容"><a href="#设计步骤和内容" class="headerlink" title="设计步骤和内容"></a>设计步骤和内容</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p>操作系统：Windows操作系统<br>开发环境：Win10系统下的eclipse</p>
+<h3 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h3><p>1、创建包：pachong<br>2、新建class：Crawler<br>3、在Crawler类中添加属性：<br>   爬虫的入口（theURL）、抓取的超链接的存放路径（theFILE）、抓取的页面数据的存放路径（thePATH）、判断是否是特定网站相关的页面的正则表达式（theREGEX）、页面计数器（count）<br>4、在Crawler类中添加方法：<br>   URLcrawler(String URL,PrintWriter pw)：实现用递归法对传入的URL的页面数据进行抓取并写入创建的txt文件，写入的同时判断数据是否含有超链接，如果是则进行链接查重（调用check方法）和抓取。theURL为递归入口。当抓取的页面个数为10000时，结束递归。<br>   Check(String url)：实现对传入的url进行查重，与已抓取的超链接记录进行比较。<br>5、在main函数中创建目标存放文件，并调用URLcrawler方法开始递归抓取页面数据。<br>6、基于Excel对已抓取的10000个页面数据进行统计分析和整理，从抓取的页面类型、个数、内容进行分析。</p>
+<h3 id="部分代码"><a href="#部分代码" class="headerlink" title="部分代码"></a>部分代码</h3><pre><code> public static void URLcrawler(String URL, PrintWriter pw){
+    URL url1=null;
+    URLConnection urlconn=null;
+    BufferedReader br=null;
+    PrintWriter connwriter=null;
+
+    Pattern pattern=Pattern.compile(theREGEX);
+    try{
+
+        String str=null;
+        url1=new URL(URL); 
+        urlconn=url1.openConnection();
+        urlconn.setRequestProperty(&quot;User-Agent&quot;, &quot;Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)&quot;);
+        Pattern pa = Pattern.compile(&quot;&lt;title&gt;.*?&lt;/title&gt;&quot;);//源码中标题正则表达式
+        Matcher ma = pa.matcher(URL);
+        while (ma.find())
+         {
+             str=ma.group();
+         }
+
+        //生成源代码文件
+        count++;
+        br=new BufferedReader(new InputStreamReader(urlconn.getInputStream(),&quot;utf-8&quot;));
+        String line=null;
+        connwriter = new PrintWriter(new FileWriter(thePATH +str+&quot;.txt&quot;),true);
+
+
+        //爬取网页文件 
+        while((line=br.readLine())!=null){
+            //把爬取的源码写入文件
+            connwriter.println(line);
+            Matcher matcher=pattern.matcher(line);
+            //判断是否是一个网址
+            while(matcher.find()){
+                   if(check(matcher.group())){
+                       if(count==10000)
+                         break;
+                    //把爬取的网址写入文件
+                    System.out.println(matcher.group());
+                    pw.println(matcher.group());
+                    URLcrawler(matcher.group(), pw);
+                }
+            }
+        }
+        System.out.println(&quot;爬取网页&quot; + URL + &quot;成功&quot;);
+        System.out.println(&quot;网页&quot; + URL + &quot;内链接爬取完成&quot;);
+}catch(Exception e){
+    e.printStackTrace();
+}finally {
+        try {
+            if(br != null) {
+                br.close();
+            }
+            if(connwriter != null) {
+                connwriter.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre><h2 id="实验结果分析"><a href="#实验结果分析" class="headerlink" title="实验结果分析"></a>实验结果分析</h2><p><img src="result1.jpg" alt=""><br><img src="result2.jpg" alt=""></p>
+<p>抓取10000个页面数据耗时：114分钟<br>10000个页面中有效页面：8854个</p>
+<p><img src="table1.jpg" alt=""><br><img src="table2.jpg" alt=""><br><img src="table3.jpg" alt=""><br><img src="table4.jpg" alt=""></p>
+<p>以抓取的“水形物语（豆瓣）”页面数据为例进行分析：<br>name:水形物语<br>director：吉尔莫·德尔·托罗 Guillermo del Toro<br>author：吉尔莫·德尔·托罗 Guillermo del Toro、瓦内莎·泰勒 Vanessa Taylor<br>actor：莎莉·霍金斯 Sally Hawkins、道格·琼斯 Doug Jones、迈克尔·珊农 Michael Shannon、理查德·詹金斯 Richard Jenkins等<br>date Published: 2017-08-31<br>description: 故事发生在1963年，时值冷战期间，哑女艾丽莎（莎莉·霍金斯 Sally Hawkins 饰）在政府实验室里工作，是那里的一名清洁女工。年幼时，一场大病夺走了艾丽莎的声音，之后一直至今，她都在沉默之中…<br>ratingCount:365201<br>best Rating: 10<br>worst Rating: 2<br>rating Value: 7.2<br>水形物语的短评：全部108775条</p>
+<p>以抓取的任意一个“丹泽尔·华盛顿 图片”页面数据为例进行详细分析：<br>第61张/共79张<br>1人喜欢<br>原图尺寸：1289×720<br>文件大小：64.7KB<br>来自：<a href="https://www.douban.com/people/52334317/" target="_blank" rel="noopener">https://www.douban.com/people/52334317/</a>  跑掉的虾滑 上传于2012-03-01</p>
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><p>1、实验中遇到的问题<br> ①异常 java.io.IOException: Server returned HTTP response code: 403 for URL:<br> 访问豆瓣电影相关页面时需要访问权限，否则服务器禁止抓取。通过设置User-Agent伪装成用户对页面进行访问。<br>详细代码：<br><img src="answer.jpg" alt=""></p>
+<p> ②抓取页面源代码中的title作为txt文件的名称时遇到问题：抓取页面是以行为单位，有些页面的源代码的<title>…</title>不在同一行，依据正则表达式无法抓取标题。</p>
+<p>2、可改进方面<br>①对抓取的页面进行分类存储，通过识别页面属性（photo/movie/…）分类存放。<br>②使用多线程进行页面抓取，提高抓取效率。</p>
+<p>3、心得体会<br>Java爬虫有许多方便的框架，但本设计没有用到框架，只是用单线程和递归法抓取10000个页面，设计过程中在设置正则表达式时耗费较长时间，通过一次次修改正则表达式最终达到筛选url的目的。分析过程耗时较长，因为抓取的10000个页面的内容没有进行筛选和分类，所以要先对10000个页面的内容一一查看并根据源代码中的title进行记录和分类。<br>通过本课程设计，我了解了Java网络爬虫的相关知识和正则表达式的书写格式和方法，并且可以设计实现一个相对简单的单线程运用递归法抓取页面的程序。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>[1]通过设置代理，解决服务器禁止抓取，报“java.io.IOException: Server returned HTTP response code: 403 for URL”错误的方法:<a href="https://www.cnblogs.com/xujanus/p/3423029.html" target="_blank" rel="noopener">https://www.cnblogs.com/xujanus/p/3423029.html</a>;<br>[2]java爬取网站中所有网页的源代码和链接:<a href="https://www.cnblogs.com/autonomy/p/11890349.html" target="_blank" rel="noopener">https://www.cnblogs.com/autonomy/p/11890349.html</a>;<br>[3]正则表达式 – 语法:<a href="https://www.runoob.com/regexp/regexp-syntax.html" target="_blank" rel="noopener">https://www.runoob.com/regexp/regexp-syntax.html</a>;</p>
+<p>详细代码见 <a href="https://github.com/lynneliu-creator/JavaCode/blob/master/Crawler.java" target="_blank" rel="noopener">https://github.com/lynneliu-creator/JavaCode/blob/master/Crawler.java</a><br>欢迎交流~</p>
+</div></article><div class="post-view__sidebar"><div class="sidebar"><div class="tocbot"><h2>Toc</h2><div class="toc__content"></div></div><h2>Links</h2><div class="sidebar__link"><ul><li><a href="https://github.com/lynneliu-creator" target="_blank" rel="noopener">Github</a></li><li><a href="mailto:yzlynneliu@163.com">Mail</a></li></ul></div><h2>Archives</h2><div class="sidebar__archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a></li></ul></div><h2>Categories</h2><div class="sidebar__categories"><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">课程设计</a></li></ul></div><h2>Tags</h2><div class="sidebar__tags"><ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">计算机组成原理</a></li></ul></div></div></div></div><div class="horizontal-line" style="height: 1px"></div><div class="main__bottom"><div class="pre-next"><a class="pre-button">没有更多</a><a class="next-button" href="/2020/07/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B9%8B%E8%BF%90%E7%AE%97%E5%99%A8%E5%AE%9E%E9%AA%8C/">计算机组成原理之运算器实验</a></div></div></div></div><div class="footer"><span>©️2019-2020 Designed By&nbsp;<strong><a href="https://github.com/random-yang" target="_blank" rel="noopener">RandomYang</a></strong> Powered By&nbsp;</span><strong><a href="https://hexo.io" target="_blank" rel="noopener">hexo</a></strong></div><div class="darkmode-mask" id="darkmode-mask"></div><div class="sidebar__button"></div></body></html>
