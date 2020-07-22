@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0"><meta name="description" content="计算机图形学大作业：真实感场景 [ lynne's blog:) ] "><meta name="theme-color" content="#9be3de"><title>计算机图形学大作业：真实感场景 [ lynne's blog:) ] </title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css"><script src="https://cdn.bootcss.com/highlight.js/9.6.0/highlight.min.js" defer></script><script src="/js/paper.js" defer></script><script src="https://www.googletagmanager.com/gtag/js?id=xx-xxxxxxx-xx" async></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'xx-xxxxxxx-xx');</script><link rel="stylesheet" href="/css/tocbot.css"><script src="/js/tocbot.js" defer></script><script>window.addEventListener('DOMContentLoaded', () => {
+  tocbot.init({
+    // Where to render the table of contents.
+    tocSelector: '.toc__content',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: '.article__content',
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    // For headings inside relative or absolute positioned containers within content.
+    hasInnerContainers: true,
+    orderedList: false,
+    collapseDepth: 2,
+  });
+})</script><link rel="preload" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css"><link rel="preload" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="mask-border"></div><div class="head"><div class="head__inner"><h1><a href="/">lynne's blog:)</a></h1><p>I am a force to be reckoned with.</p></div></div><div class="paper-container"><div class="main"><div class="location-bar"><div class="line-1"><div class="horizontal-line" style="height: 3px"></div></div><div class="line-2"><div class="horizontal-line" style="height: 1px"></div></div><p class="text">计算机图形学大作业：真实感场景</p><div class="switch-button"><input class="container_toggle" type="checkbox" id="switch" name="mode"><label for="switch">Toggle</label></div><div class="line-3"><div class="horizontal-line" style="height: 1px"></div></div></div><div class="main__2-col"><article class="post-view__article"><div class="article__infomation"><div class="posts-item"><h2 class="posts-item__title"><a href="">计算机图形学大作业：真实感场景</a></h2><span class="post__date">2020-07-22</span><a href="/tags/OpenGL/"><span class="post__tags">#OpenGL</span></a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="post__tags">#计算机图形学</span></a></div></div><div class="article__content"><h2 id="运行环境配置"><a href="#运行环境配置" class="headerlink" title="运行环境配置"></a>运行环境配置</h2><p>本设计是在Visual Studio2017 的Win32 控制台应用程序下，使用OpenGL里的GLUT库开发的，开发环境搭建步骤如下：<br>（1）安装Visual Studio2017<br>（2）配置OpenGL<br>GLUT函数库需要下载并设置include和bin的路径，把dll文件放在system32下。</p>
+<h2 id="要求说明"><a href="#要求说明" class="headerlink" title="要求说明"></a>要求说明</h2><p>在屏幕上显示一个包含多个虚拟物体的虚拟场景，并且能响应用户的交互操作。<br>要求：<br>（1）场景中的虚拟物体至少 2 个有纹理贴图；<br>（2）具有光照、阴影效果，光源的类型至少有 2 种；<br>（3）用户可交互实现视角切换完成对场景的任意角度浏览；<br>（4）允许用户通过键盘或者鼠标实现对场景中至少两个物体进行交互控制 （例如移动，旋转，缩放等）。</p>
+<h2 id="主要技术"><a href="#主要技术" class="headerlink" title="主要技术"></a>主要技术</h2><h3 id="场景搭建"><a href="#场景搭建" class="headerlink" title="场景搭建"></a>场景搭建</h3><p>本设计主要使用了glPushMatrix()和glPopMatrix()。<br>将本次需要执行的缩放、平移等操作放在glPushMatrix()和glPopMatrix()之间,可以消除上一次的变换对本次变换的影响，使本次变换是以世界坐标系的原点为参考点进行的。<br>glPushMatrix()和glPopMatrix()方便我们独立的设计场景中的物体，不用受到其他物体的影响。</p>
+<h3 id="纹理设计"><a href="#纹理设计" class="headerlink" title="纹理设计"></a>纹理设计</h3><p>本系统采用加载BMP纹理图像并贴图到物体上的方法来实现纹理。<br>加载BMP图像具体实现如下：<br>函数LoadTexture():传参：BMP图像的名称、目的纹理名称</p>
+<p>1.首先创建名为texid的纹理——glGenTexture()；<br>2.其次读取BMP图像的数据——LoadImage()、GetObject()、glPixelStorei()（设置像素存储模式规范，读取数据时每读取4个字节渲染一行）；<br>3.然后将该纹理图像绑定到目的纹理名上——glBindTexture()<br>4.进行纹理过滤操作——glTexParameteri()；<br>5.最后载入二维纹理并释放句柄——glTexImage2D()、DeleteObject()</p>
+<p>纹理贴图具体实现如下：<br>首先创建纹理名：<br><img src="wenli.jpg" alt=""></p>
+<p>然后在初始化函数init()中加载纹理：<br><img src="jiazai.jpg" alt=""></p>
+<p>最后贴图：<br><img src="tietu.jpg" alt=""></p>
+<p>效果图：<br><img src="xiaoguo1.jpg" alt=""></p>
+<p>注意：<br>1、    在贴图时需要给当前的顶点赋予一个贴图坐标，调用glTexCoord2f()，如果不调用的话，纹理显示不出来。<br>2、    glTexEnvi()函数用于设置当前的纹理映射方式，默认情况下贴图模式是GL_MODULATE，在这种模式下，OpenGL会根据当前的光照系统调整物体的色彩和明暗。</p>
+<h3 id="光照设计"><a href="#光照设计" class="headerlink" title="光照设计"></a>光照设计</h3><p>在图形学中光源类型主要有四种：环境光、平行光、点光源、聚光灯。在光照设计时主要运用的函数有：<br>1、控制光照的函数：glEnable(GL_LIGHTING)、glEnable(GL_LIGHT0)、glDisable(GL_LIGHT0)。<br>其中，glEnable(GL_LIGHTING)相当于开启灯光总闸，glEnable(GL_LIGHT0)、glDisable(GL_LIGHT0)相当于开启/关闭某一盏灯。<br>2、设置光源参数的函数：glLightModelfv()。<br>我们可以设置光源的环境光、散射光、平行光、光源位置等。<br>3、设置物体的材质函数：glMaterialfv()<br>本设计主要实现了环境光、平行光和点光源，以及茶壶的材质。</p>
+<h4 id="设置环境光"><a href="#设置环境光" class="headerlink" title="设置环境光"></a>设置环境光</h4><p>OpenGL提供了一个全局光源，它只发射环境光。<br>具体实现如下：<br><img src="huanjing.jpg" alt=""></p>
+<p>效果图：<br><img src="huanjingxiaoguo.jpg" alt=""></p>
+<h4 id="设置平行光和点光源"><a href="#设置平行光和点光源" class="headerlink" title="设置平行光和点光源"></a>设置平行光和点光源</h4><p>平行光是方向性光源，不考虑光的衰减，点光源是位置性光源，要考虑光的衰减。在设置位置属性时，最后一个参数是0则是平行光，最后一个参数非0则是点光源。<br>具体实现如下：<br><img src="guangyuan.jpg" alt=""></p>
+<p>效果图：<br><img src="xiaoguo2.jpg" alt=""><br><img src="xiaoguo3.jpg" alt=""></p>
+<p>3、    设置茶壶的材质参数<br><img src="teapot.jpg" alt=""></p>
+<p>效果图：<br><img src="teapot2.jpg" alt=""></p>
+<h3 id="场景漫游"><a href="#场景漫游" class="headerlink" title="场景漫游"></a>场景漫游</h3><p>本设计主要使用键盘控制和鼠标移动来实现视点在场景中的漫游。<br>通过改变gluLookAt()函数中的参数更换视角和场景大小。<br>函数原型：<br>    void gluLookAt(GLdouble eyex,GLdouble eyey,GLdouble eyez,GLdouble centerx,GLdouble centery,GLdouble centerz,GLdouble upx,GLdouble upy,GLdouble upz);</p>
+<pre><code>{eyex,eyey,eyez}
+确定相机在世界坐标的位置
+
+{centerx,centery,centerz}
+确定相机镜头对准的物体在世界坐标的位置
+
+{upx,upy,upz}
+确定相机向上的方向在世界坐标中的方向</code></pre><p>初始状态设置：<br><img src="set.jpg" alt=""></p>
+<p>键盘上的Q、E、W、S、A、D键分别控制摄像机上下前后左右移动。</p>
+<p>效果图：<br><img src="move1.jpg" alt=""><br><img src="move2.jpg" alt=""></p>
+<h2 id="系统特色"><a href="#系统特色" class="headerlink" title="系统特色"></a>系统特色</h2><p>本设计具有良好的交互性，通过键盘和鼠标可以实现以下功能：<br>1、进行任意视角的观察<br>2、更换壁纸<br>3、开关灯和光源切换<br>4、旋转茶壶<br>5、（取消）茶壶纹理<br>6、移动桌子</p>
+<p><img src="shuoming.jpg" alt=""></p>
+<h2 id="遇到的问题和解决方法"><a href="#遇到的问题和解决方法" class="headerlink" title="遇到的问题和解决方法"></a>遇到的问题和解决方法</h2><p>1、在设计纹理贴图功能时，已经加载了纹理，但是没有纹理出来，只有纹理的颜色在物体上，在浏览相关的博客和论文后，比对自己的代码，发现自己没有设置贴图坐标。<br>2、在设计光源的开关时，把<br>    glEnable(GL_LIGHT0);<br>写成了<br>    glEnable(light0);</p>
+<p>于是一直没有实现光源的开关效果，一直以为是有一些代码没有写全，所以无法实现，最后在通读整段代码一一排查时发现了这个盲点。<br>3、在实现键盘控制视角时，一开始没有加重新调用gluLookAt()的代码，发现无法实现交互，我以为在初始化的函数里调用了就可以了，我想可能是我搞错了初始化函数的工作周期，后来阅读别人的代码并且查询了glutDisplayFunc()的相关知识才了解，init()就是刚运行时调用，之后就是display函数里的内容一直在重绘刷新。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经过不断地学习和调试，本设计已经完成，但还有一些没有解决的问题和改善的方向：<br>1、对茶桌地纹理贴图没有实现，即如何对glutsolidcube贴图。<br>2、虽然已经有了光影的效果，但是没能实现影子的映射。<br>3、在场景漫游设计时误打误撞实现了鼠标交互，经过排查，应该是与设置的摄像机位置的变量有关，当把<br>    float x=100.0f,y=150.0f,z=150.0f;<br>改成其他的变量名之后，<br>比如<br>    float cx=100.0f,cy=150.0f,cz=150.0f;<br>鼠标交互就不能用了。截止到写实验报告的时候，还没有想/查明白原因。<br>4、仅实现了茶壶的材质设置，没有实现所有物体的材质设置。</p>
+<p>在之前的图形学学习中，虽然有学习和涉及OpenGL的相关函数，但在平时的实验中没有用过OpenGL，为了这次实验才认认真真的研究OpenGL的内容，在研究了相关论文和函数后发现OpenGL真的是一个性能很强大、易于上手的图形库，尤其在渲染方面还有许多功能值得我去挖掘和学习。<br>在刚开始着手实验时，我一头雾水，感觉无从下手，即使看了OpenGL的一些论文后也不知道怎么处理新建的项目。然后开始复现别人的例子，在复现时有许多函数不理解，便一个一个去查他们的作用和调用方法，在这期间我渐渐对搭建场景有了一个大概的实现步骤，对光照、纹理、漫游等有了一个操作的经验，后期设计和实现时就熟练很多了。通过这次OpenGL的实验和之前对一些软件的学习经历，我发现对于实际的应用软件，光是学习理论知识，从书本上了解了函数的功能是不够的，只有实际操作了才知道如何运用他们并且真正的记住了这些函数，我也很享受一步步掌握并且应用他们的过程。</p>
+<p>源代码见：<a href="https://github.com/lynneliu-creator/practices" target="_blank" rel="noopener">https://github.com/lynneliu-creator/practices</a><br>欢迎交流~</p>
+</div></article><div class="post-view__sidebar"><div class="sidebar"><div class="tocbot"><h2>Toc</h2><div class="toc__content"></div></div><h2>Links</h2><div class="sidebar__link"><ul><li><a href="https://github.com/lynneliu-creator" target="_blank" rel="noopener">Github</a></li><li><a href="mailto:yzlynneliu@163.com">Mail</a></li></ul></div><h2>Archives</h2><div class="sidebar__archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a></li></ul></div><h2>Categories</h2><div class="sidebar__categories"><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">课程设计</a></li></ul></div><h2>Tags</h2><div class="sidebar__tags"><ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenGL/" rel="tag">OpenGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">计算机组成原理</a></li></ul></div></div></div></div><div class="horizontal-line" style="height: 1px"></div><div class="main__bottom"><div class="pre-next"><a class="pre-button">没有更多</a><a class="next-button" href="/2020/07/22/Java%E7%88%AC%E8%99%AB%EF%BC%9A%E9%80%92%E5%BD%92%E6%8A%93%E5%8F%96%E9%A1%B5%E9%9D%A2/">Java爬虫：递归抓取页面</a></div></div></div></div><div class="footer"><span>©️2019-2020 Designed By&nbsp;<strong><a href="https://github.com/random-yang" target="_blank" rel="noopener">RandomYang</a></strong> Powered By&nbsp;</span><strong><a href="https://hexo.io" target="_blank" rel="noopener">hexo</a></strong></div><div class="darkmode-mask" id="darkmode-mask"></div><div class="sidebar__button"></div></body></html>
