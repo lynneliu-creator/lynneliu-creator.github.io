@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0"><meta name="description" content="算法之电路板排列问题 [ lynne's blog:) ] "><meta name="theme-color" content="#9be3de"><title>算法之电路板排列问题 [ lynne's blog:) ] </title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css"><script src="https://cdn.bootcss.com/highlight.js/9.6.0/highlight.min.js" defer></script><script src="/js/paper.js" defer></script><script src="https://www.googletagmanager.com/gtag/js?id=xx-xxxxxxx-xx" async></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'xx-xxxxxxx-xx');</script><link rel="stylesheet" href="/css/tocbot.css"><script src="/js/tocbot.js" defer></script><script>window.addEventListener('DOMContentLoaded', () => {
+  tocbot.init({
+    // Where to render the table of contents.
+    tocSelector: '.toc__content',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: '.article__content',
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    // For headings inside relative or absolute positioned containers within content.
+    hasInnerContainers: true,
+    orderedList: false,
+    collapseDepth: 2,
+  });
+})</script><link rel="preload" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/github.min.css"><link rel="preload" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface&amp;display=swap"><meta name="generator" content="Hexo 4.2.1"></head><body><div class="mask-border"></div><div class="head"><div class="head__inner"><h1><a href="/">lynne's blog:)</a></h1><p>I am a force to be reckoned with.</p></div></div><div class="paper-container"><div class="main"><div class="location-bar"><div class="line-1"><div class="horizontal-line" style="height: 3px"></div></div><div class="line-2"><div class="horizontal-line" style="height: 1px"></div></div><p class="text">算法之电路板排列问题</p><div class="switch-button"><input class="container_toggle" type="checkbox" id="switch" name="mode"><label for="switch">Toggle</label></div><div class="line-3"><div class="horizontal-line" style="height: 1px"></div></div></div><div class="main__2-col"><article class="post-view__article"><div class="article__infomation"><div class="posts-item"><h2 class="posts-item__title"><a href="">算法之电路板排列问题</a></h2><span class="post__date">2020-09-01</span><a href="/tags/algorithm/"><span class="post__tags">#algorithm</span></a></div></div><div class="article__content"><h2 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h2><p>利用回溯与分支限界知识完成：<br><img src="quest.jpg" alt=""></p>
+<h2 id="设计原理"><a href="#设计原理" class="headerlink" title="设计原理"></a>设计原理</h2><p>该问题所要求的：在n个元素的集合中找出满足某种性质的排列，解空间为排列树。排列树的重点是要确定n个元素的前后次序。<br>本题的约束条件为：在新加入的结点和其父结点组成的相邻凹槽的连线数不大于排列密度。<br>画出本题的搜索树如下。<br>按深度优先策略，从根结点出发搜索排列树，每次加入新的结点时，先判断该结点是否满足约束条件，如果不满足约束条件，则跳过对该结点为根的子树的搜索，逐层向其祖先结点回溯。否则进入该子树，继续按深度优先策略搜索。<br>由于本题要求出排列密度最小的电路板排列，所以约束条件更加苛刻，即：在新加入的结点和其父结点组成的相邻凹槽的连线数小于排列密度。同时，在每次加入新结点之后，更新该已排好的列中的最大连线数。</p>
+<p><img src="silu.jpg" alt=""></p>
+<h2 id="最优解证明"><a href="#最优解证明" class="headerlink" title="最优解证明"></a>最优解证明</h2><p><img src="zhengming.jpg" alt=""></p>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p><img src="note.jpg" alt=""></p>
+<h2 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h2><pre><code>void Backtrack(int t,int d0)//回溯算法</code></pre><p>{<br>    if (t == N)<br>    {<br>        for (int i = 1; i &lt; N+1; i++)<br>        {<br>            bestx[ii][i] = x[i];<br>        }</p>
+<pre><code>    bestx[ii][0] = d0;
+    if (d0 &lt; MaxDensity)
+    {
+        MaxDensity = d0;
+    }
+
+    ii++;
+
+}
+else
+{
+    for (int i = t; i &lt;= N; i++)
+    {
+        int d1 = Density(i);
+        if (d0 &gt; d1)
+        {
+            d1 = d0;
+        }
+        if (d1&lt;=MaxDensity)
+        {
+
+            swap(x[t], x[i]);//同一层结点的选择，相当于同一位置不同的人坐
+            Backtrack(t + 1,d1);
+            swap(x[t], x[i]);//如果下个结点剪枝了，就交换回到最近的父节点，进行下父结点下一个子树的检测。
+        }
+    }
+}</code></pre><p>}</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p><img src="result.jpg" alt=""></p>
+<h2 id="算法时间复杂度分析"><a href="#算法时间复杂度分析" class="headerlink" title="算法时间复杂度分析"></a>算法时间复杂度分析</h2><p>在解空间排列树的每个结点处，需要花费Ο(n)时间计算连线数，回溯算法在最坏情况下可能需要更新当前最优解Ο((n-1)!)次，每次更新最优排列需要时间Ο(n)，因此在最坏情况下整个算法的时间复杂度为Ο(n·n!)</p>
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><p>回溯算法有点像穷举，但通过分支限界，剪枝策略，使得算法效率比穷举快很多，在每一个结点处判断是否满足约束条件，如不满足，意味着就算再进行下去结果还是不符合条件的，也就是“看到”了最终结果，回溯到其祖先结点。回溯算法虽然可行，但时间复杂度高，耗费的时间多。</p>
+<p>源代码：<a href="https://github.com/lynneliu-creator/algorithm" target="_blank" rel="noopener">https://github.com/lynneliu-creator/algorithm</a><br>欢迎交流~</p>
+</div></article><div class="post-view__sidebar"><div class="sidebar"><div class="tocbot"><h2>Toc</h2><div class="toc__content"></div></div><h2>Links</h2><div class="sidebar__link"><ul><li><a href="https://github.com/lynneliu-creator" target="_blank" rel="noopener">Github</a></li><li><a href="mailto:yzlynneliu@163.com">Mail</a></li></ul></div><h2>Archives</h2><div class="sidebar__archives"><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/">2020</a></li></ul></div><h2>Categories</h2><div class="sidebar__categories"><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">课程设计</a></li></ul></div><h2>Tags</h2><div class="sidebar__tags"><ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenGL/" rel="tag">OpenGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">计算机组成原理</a></li></ul></div></div></div></div><div class="horizontal-line" style="height: 1px"></div><div class="main__bottom"><div class="pre-next"><a class="pre-button" href="/2020/09/01/%E7%AE%97%E6%B3%95%E4%B9%8B%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89/">算法之背包问题（动态规划）</a><a class="next-button" href="/2020/09/01/%E7%AE%97%E6%B3%95%E4%B9%8B%E5%AE%BF%E8%90%A5%E5%9C%B0%E9%80%89%E6%8B%A9%E9%97%AE%E9%A2%98/">算法之宿营地选择问题</a></div></div></div></div><div class="footer"><span>©️2019-2020 Designed By&nbsp;<strong><a href="https://github.com/random-yang" target="_blank" rel="noopener">RandomYang</a></strong> Powered By&nbsp;</span><strong><a href="https://hexo.io" target="_blank" rel="noopener">hexo</a></strong></div><div class="darkmode-mask" id="darkmode-mask"></div><div class="sidebar__button"></div></body></html>
